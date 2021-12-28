@@ -17,8 +17,8 @@ def main_snake(stdscr):
     stdscr.refresh()
 
     # set the color pairs (id, font color, bg color)
-    curses.init_pair(1, curses.COLOR_GREEN, curses.COLOR_GREEN)
-    curses.init_pair(2, curses.COLOR_RED, curses.COLOR_RED)
+    curses.init_pair(1, curses.COLOR_BLACK, curses.COLOR_GREEN)
+    curses.init_pair(2, curses.COLOR_BLACK, curses.COLOR_RED)
     curses.init_pair(3, curses.COLOR_RED, curses.COLOR_WHITE)
 
     # the dict with the coordinate increments for all the directions: if 'down' then (y + 1, x + 0)...
@@ -107,12 +107,19 @@ def main_snake(stdscr):
                 apple = (randrange(2, height - 2, 2), randrange(2, width - 2, 2))
                 if apple not in snake:
                     break
-        # draw the snake by its coords_list
-        for koords in snake:
-            stdscr.addstr(*koords, '**', curses.color_pair(1))
 
-        # draw the apple
-        stdscr.addstr(*apple, '@@', curses.color_pair(2))
+        # draw the snake with eyes by its coords_list.
+        first_ch = {'left': ': ', 'right': ' :', 'up': '\'\'', 'down': '..'}
+        for i in range(1, len(snake)):
+            if i == 0:
+                ch = first_ch[direction]
+            else:
+                ch = '  '
+            stdscr.addstr(*snake[i], ch, curses.color_pair(1))
+
+        # draw an apple
+        stdscr.addstr(*apple, '\' ', curses.color_pair(2))
+
         # just for verifying
         # stdscr.addstr(0, 0, f'{init_y}, {init_x}')
         # stdscr.addstr(2, 0, f'{apple}, {snake}')
