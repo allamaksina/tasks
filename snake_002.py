@@ -109,7 +109,7 @@ def main_snake(stdscr):
                     break
         # draw the snake with eyes by its coords_list.
         first_ch = {'left': ': ', 'right': ' :', 'up': '\'\'', 'down': '..'}
-        for i in range(1, len(snake)):
+        for i in range(len(snake)):
             if i == 0:
                 ch = first_ch[direction]
             else:
